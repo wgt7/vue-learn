@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <title>el与data的两种写法</title>
+    <!-- 引入Vue -->
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+    <!-- 
+        data与el的2种写法
+            1.el有2种写法
+                (1).new Vue时候配置el属性。
+                (2).先创建Vue实例，随后再通过vm.$mount('#root')指定el的值。
+            2.data有2种写法
+                (1).对象式
+                (2).函数式
+                如何选择：目前哪种写法都可以，以后学习到组件时，data必须使用函数式，否则会报错。
+            3.一个重要的原则：
+                由Vue管理的函数，一定不要写箭头函数，一旦写了箭头函数，this就不再是Vue实例了。
+    -->
+    <!-- 准备好一个容器-->
+    <div id="root">
+    <h1>你好,{{names}}</h1>
+
+    </div>
+</body>
+
+<script type="text/javascript">
+
+    //el的两种写法
+    /*const v = new Vue({
+        // el: '#root',//第一种写法
+        data:{
+            names:'尚硅谷'
+        }
+    })*/
+
+    // v.$mount('#root')//第二种写法
+    /* setTimeout(() => {
+        v.$mount('#root')
+    }, 1000);
+
+    console.log(v); */
+
+    new Vue({
+        el: '#root',
+        //data的第一种写法：对象式
+       /*  data:{
+            names:'尚硅谷'
+        } */
+
+        //data的第二种写法：函数式
+       /*  data:function(){
+            console.log('@@@',this);//此处的this是Vue实例对象
+            return {
+                names:'尚硅谷'
+            }
+        } */
+
+        //简写
+        data(){
+            console.log('@@@',this);//此处的this是Vue实例对象
+            return {
+                names:'尚硅谷'
+            }
+        }
+
+
+        //拓展。箭头函数，没有自己的this，往外找，找到全局的window
+        /* data:()=>{
+            console.log('@@@',this);//此处的this是Widows的DOM对象
+            return {
+                names:'尚硅谷'
+            }
+        } */
+
+    })
+</script>
+</html>
