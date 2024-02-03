@@ -38,5 +38,13 @@
 			"</script>"
 		],
 		"description": "javascript"
+	},
+	"Print to console": {
+		"scope": "javascript,typescript,vue,html",
+		"prefix": "csl",
+		"body": [
+			"console.log();",
+		],
+		"description": "console.log()"
 	}
 }
