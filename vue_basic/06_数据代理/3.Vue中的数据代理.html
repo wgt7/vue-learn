@@ -29,8 +29,8 @@
 <script type="text/javascript">
     Vue.config.productionTip = false //阻止 vue 在启动时生成生产提示。
     let data = {
-        name:'尚硅谷',
-        address:'宏福科技园'
+        name: '尚硅谷',
+        address: '宏福科技园'
     }
 
     const vm = new Vue({
@@ -44,6 +44,14 @@
 
         data
     })
+
+    /*
+        Vue将data中的数据复制到_data中
+        操作data中的数据时，Vue做了数据代理，使用getter和setter，实际操作的是_data中的数据,
+        当data中的数据发生变化时，页面中使用到data的数据地方也发生变化，即响应式。
+        数据代理的原理，是通过Object.defineProperty这个api实现。
+    */
+
 </script>
 
 </html>
