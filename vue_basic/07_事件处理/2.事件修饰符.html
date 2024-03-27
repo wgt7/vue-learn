@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>事件修饰符</title>
+  <!-- 引入Vue -->
+  <script type="text/javascript" src="../js/vue.js"></script>
+  <style>
+    * {
+      margin-top: 20px;
+    }
+
+    .demo1 {
+      height: 50px;
+      background-color: skyblue;
+    }
+
+    .box1 {
+      padding: 5px;
+      background-color: skyblue;
+    }
+
+    .box2 {
+      padding: 5px;
+      background-color: orange;
+    }
+    
+    .list {
+      width: 200px;
+      height: 200px;
+      background-color: peru;
+      overflow: auto;
+    }
+    li {
+      height: 100px;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- 
+      Vue中的事件修饰符：
+        1.prevent：阻止默认事件（常用）；
+        2.stop：阻止事件冒泡（常用）；
+        3.once：事件只触发一次（常用）；
+        4.capture：使用事件的捕获模式；
+        5.self：只有event.target是当前操作的元素时才触发事件；
+        6.passive：事件的默认行为立即执行，无需等待事件回调执行完毕；
+   -->
+  <!-- 准备好一个容器-->
+  <div id="root">
+    <h2>欢迎来到{{name}}学习</h2>
+    <!-- prevent：阻止默认事件（常用） -->
+    <a href="https://www.jd.com" @click.prevent="showInfo">点我提示信息</a>
+    <!-- 阻止事件冒泡（常用） -->
+    <div class="demo1" @click="showInfo">
+      <button @click.stop="showInfo">点我提示信息</button>
+    </div>
+
+    <!-- once：事件只触发一次（常用） -->
+    <button @click.once="showInfo">点我提示信息</button>
+
+    <!-- capture：使用事件的捕获模式 -->
+    <!-- 事件先经历捕获阶段(由外往内)，再经历冒泡阶段(由内往外)，事件处理在冒泡阶段 -->
+    <!-- 正常是先打印2，再打印1，capture改为在捕获阶段就处理事件，所以打印结果为1 2 -->
+    <div class="box1" @click.capture="showMsg(1)">
+      div1
+      <div class="box2" @click="showMsg(2)">
+        div2
+      </div>
+    </div>
+
+    <!-- self：只有event.target是当前操作的元素时才触发事件 -->
+    <!-- 不加self时，点击button也会触发div的事件，因为有事件的冒泡，加上后只有点击div时才触发div的事件，冒泡不会触发 -->
+    <div class="demo1" @click.self="showInfo3">
+      <button @click="showInfo3">点我提示信息</button>
+    </div>
+
+    <!-- passive：事件的默认行为立即执行，无需等待事件回调执行完毕； -->
+    <!-- @scroll对滚动条或者鼠标滚轮生效，滚动条滑动一点，事件触发一次.滚动条到底后，不再触发 -->
+    <!-- @wheel只对鼠标滚轮生效，滚轮滑动一点，事件触发一次，滚动条到底后，仍可以触发。passive先滚动，无需等待回调 -->
+    <!-- <ul @scroll="demo" class="list"> -->
+    <ul @wheel.passive="demo" class="list">
+      <li>1</li>
+      <li>2</li>
+      <li>3</li>
+      <li>4</li>
+    </ul>
+  </div>
+</body>
+
+<script type="text/javascript">
+  Vue.config.productionTip = false //阻止 vue 在启动时生成生产提示。
+
+  const vm = new Vue({
+    el: '#root',
+    data: {
+      name: '尚硅谷'
+    },
+    methods: {
+      showInfo(e) {
+        // e.preventDefault()//阻止事件的默认行为，例如a标签的跳转。同vue的prevent
+        // e.stopPropagation()//阻止事件冒泡。同vue的stop
+        alert('同学你好')
+      },
+      showMsg(msg){
+        console.log(msg)
+      },
+      showInfo3(e) {
+        console.log(e.target)
+      },
+      demo(){
+        // console.log('@')
+        for (let i = 0; i < 10000; i++) {
+          console.log('#')
+        }
+        console.log('累坏了')
+      }
+    },
+  })
+</script>
+
+</html>
