@@ -43,7 +43,7 @@
 		"scope": "javascript,typescript,vue,html",
 		"prefix": "csl",
 		"body": [
-			"console.log();",
+			"console.log()",
 		],
 		"description": "console.log()"
 	}
