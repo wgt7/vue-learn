@@ -49,6 +49,9 @@
     <!-- 定制按键别名 -->
     <input type="text" placeholder="按下回车提示输入" @keydown.huiche="showInfo">
     <br>
+    <!-- 按键可以连续使用，例如只有当按下ctrl+y才可以 -->
+    <input type="text" placeholder="按下ctrl+y提示输入" @keyup.ctrl.y="showInfo">
+    <br>
     <input type="text" placeholder="按下任意键提示输入" @keyup="showInfo">
   </div>
 </body>
