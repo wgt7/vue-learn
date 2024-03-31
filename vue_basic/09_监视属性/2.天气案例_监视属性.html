@@ -42,7 +42,8 @@
         this.isHot = !this.isHot
       }
     },
-    /* watch: {
+    //监视方式一
+    watch: {
       // info:{//也可以监视计算属性
       isHot:{
         immediate: true,//初始化时让handler调用一下
@@ -51,16 +52,17 @@
           console.log('isHot被修改了', newVlaue, oldValue)
         }
       }
-    } */
+    }
   })
 
-  vm.$watch('isHot', {
+  //监视方式二
+  /* vm.$watch('isHot', {
     immediate: true,//初始化时让handler调用一下
     //handler什么时候调用？当isHot发生改变时
     handler(newVlaue, oldValue) {
       console.log('isHot被修改了', newVlaue, oldValue)
     }
-  })
+  }) */
 
 </script>
 
