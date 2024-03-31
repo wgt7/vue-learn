@@ -31,6 +31,12 @@ Ctrl + Shift + /：块注释。修改快捷键：设置-->命令面板-->Toggle 
 
 自定义代码片段：见设置--搜索vue-learning.code-snippets文件
 
+## 三、vs code插件
+
+- Live Server -- by Ritwick Dey  服务器
+
+- Vue 3 Snippets -- by hollowtree  vue代码提示
+
 
 
 
