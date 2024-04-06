@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Vue.set的使用</title>
+
+  <!-- 引入Vue -->
+  <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+
+<body>
+  <!--
+  -->
+  <!-- 准备好一个容器-->
+  <div id="root">
+    <h1>学校信息</h1>
+    <h2>学校名称：{{school.names}}</h2>
+    <h2>学校地址：{{school.address}}</h2>
+    <h2>校长是：{{school.leader}}</h2>
+    <hr/>
+    <h1>学生信息</h1>
+    <button @click="addSex">添加一个性别属性，默认值是男</button>
+    <h2>姓名：{{student.name}}</h2>
+    <h2 v-if="student.sex">性别：{{student.sex}}</h2>
+    <h2>年龄：真实{{student.age.rAge}},对外{{student.age.sAge}}</h2>
+    <ul>
+      <li v-for="(f,index) in student.friends" :key="index">
+        {{f.name}}-{{f.age}}
+      </li>
+    </ul>
+  </div>
+</body>
+
+<script type="text/javascript">
+  Vue.config.productionTip = false //阻止 vue 在启动时生成生产提示。
+
+  // 在浏览器控制台手动添加sex属性
+  // 方式一：Vue.set(vm.student,'sex','女')
+  // 方式二：vm.$set(vm.student, 'sex','女')
+  // vm._data.student === vm.student
+
+  // 在浏览器控制台手动添加学校leader属性,
+  // 方式一：Vue.set(vm.school,'leader','一个帅气的男老师')
+  // 方式二：vm.$set(vm.school, 'leader','一个帅气的男老师')
+
+  const vm = new Vue({
+			el:'#root',
+			data:{
+        school: {//不能直接在Vue和vm.data中加，必须在data下的属性中加,所以在学校信息外层加一个school
+          names:'尚硅谷',
+				  address:'北京',
+        },
+        // leader: '人',//没有leader页面会报错，因为vm的data中没有leader属性
+				student:{
+					name:'tom',
+          // sex:'男',//没有sex页面也不会报错，因为student没有sex属性，undefined，不会显示
+					age:{
+						rAge:40,
+						sAge:29,
+					},
+					friends:[
+						{name:'jerry',age:35},
+						{name:'tony',age:36}
+					]
+				}
+			},
+      methods: {
+        addSex(){
+          Vue.set(this.student, 'sex', '男')
+          // vm.$set(this.student, 'sex', '男')
+        }
+      },
+		})
+</script>
+
+</html>
