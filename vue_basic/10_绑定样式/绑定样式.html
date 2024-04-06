@@ -56,6 +56,15 @@
     <div class="basic" :class="classObj">{{names}}</div><br/><br/>
     <!-- 对象也可以直接写，同上，不推荐-->
     <!-- <div class="basic" :class="{atguigu1:true, atguigu2: false}">{{names}}</div> -->
+
+    <!-- 绑定style样式1：原生写法 -->
+    <!-- <div class="basic" style="font-size: 40px;">{{names}}</div><br/><br/> -->
+    <!-- 绑定style样式2：vue写法, key的横线转为大写驼峰！！！ -->
+    <!-- <div class="basic" :style="{fontSize: fsize+'px'}">{{names}}</div><br/><br/> -->
+    <!-- 绑定style样式3：vue对象写法 -->
+    <div class="basic" :style="styleObj">{{names}}</div><br/><br/>
+    <!-- 绑定style样式4：数组对象写法 -->
+    <div class="basic" :style="[styleObj, styleObj2]">{{names}}</div><br/><br/>
   </div>
 </body>
 
@@ -70,6 +79,16 @@
       classObj: {
         atguigu1: false,
         atguigu2: false
+      },
+      fsize: 40,
+      styleObj: {
+        //key的横线转为大写驼峰！！！
+        fontSize: '40px',
+        color: 'red',
+        backgroundColor: 'orange'
+      },
+      styleObj2: {
+        border: '2px red solid'
       }
     },
     methods: {
