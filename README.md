@@ -37,6 +37,22 @@ Ctrl + Shift + /：块注释。修改快捷键：设置-->命令面板-->Toggle 
 
 - Vue 3 Snippets -- by hollowtree  vue代码提示
 
+## 四、小Tips
+
+1. #region 和 #endregion,可以折叠注释的代码，防止自动打开。
+
+例如
+
+```html
+<script type="text/javascript">
+    //#region
+    //new Vue({
+        //...
+    //})
+    //#endregion
+</script>
+```
+
 
 
 
