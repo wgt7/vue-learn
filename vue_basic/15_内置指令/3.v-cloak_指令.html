@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>v-cloak_指令</title>
+  <style>
+    /* [v-cloak] 选择带有v-cloak属性的元素 */
+    [v-cloak]{
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <!--
+    v-cloak指令（没有值）：
+      1.本质是一个特殊属性，Vue实例创建完毕并接管容器后，会删掉v-cloak属性。
+      2.使用css配合v-cloak可以解决网速慢时页面展示出{{xxx}}的问题。
+  -->
+  <!-- 准备好一个容器-->
+  <div id="root">
+    <div v-cloak>{{names}}</div>
+  </div>
+
+   <!-- 引入Vue -->
+   <!-- 将vue引入放在body最下放，同时将浏览器网速调慢，浏览器-控制台-network-Nothing改为fast3G -->
+   <!-- 页面会出现 {{names}}-->
+   <script type="text/javascript" src="../js/vue.js"></script>
+</body>
+
+<script type="text/javascript">
+  console.log(1)
+  Vue.config.productionTip = false //阻止 vue 在启动时生成生产提示。
+
+  const vm = new Vue({
+    el: '#root',
+    data: {
+      names: '尚硅谷',
+    },
+    
+  })
+
+</script>
+
+</html>
