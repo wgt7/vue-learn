@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>自定义指令</title>
+
+  <!-- 引入Vue -->
+  <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+
+<body>
+  <!--
+    需求1：定义一个v-big指令，和v-text功能类似，但会把绑定的数值放大10倍。
+    需求2：定义一个v-fbind指令，和v-bind功能类似，但可以让其所绑定的input元素默认获取焦点。
+    自定义指令总结：
+      一、定义语法：
+        (1).局部指令：
+          new Vue({															new Vue({
+            directives:{指令名:配置对象}   或   		directives{指令名:回调函数}
+          }) 																		})
+        (2).全局指令：
+          Vue.directive(指令名,配置对象) 或   Vue.directive(指令名,回调函数)
+
+      二、配置对象中常用的3个回调：
+        (1).bind：指令与元素成功绑定时调用。
+        (2).inserted：指令所在元素被插入页面时调用。
+        (3).update：指令所在模板结构被重新解析时调用。
+
+      三、备注：
+        1.指令定义时不加v-，但使用时要加v-；
+        2.指令名如果是多个单词，要使用kebab-case命名方式，不要用camelCase命名。
+  -->
+  <!-- 准备好一个容器-->
+  <div id="root">
+    <h2>当前的n值是：<span v-text="n"></span></h2>
+    <!-- 多个单词时，用-隔开，不能用驼峰，定义的时候用''括起来 -->
+    <!-- <h2>放大10倍后的n值是：<span v-big-number="n"></span></h2> -->
+    <h2>放大10倍后的n值是：<span v-big="n"></span></h2>
+    <button @click="n++">点我n+1</button><br />
+    <hr>
+    <input type="text" v-fbind:value="n">
+  </div>
+
+  <!-- <div id="root2">
+    <input type="text" v-fbind:value="x">
+  </div> -->
+</body>
+
+<script type="text/javascript">
+  Vue.config.productionTip = false //阻止 vue 在启动时生成生产提示。
+
+  //定义全局指令
+ /*  Vue.directive('fbind', {
+    //指令与元素成功绑定时（一上来）
+    bind(element, binding) {
+      element.value = binding.value
+    },
+    //指令所在元素被插入页面时
+    inserted(element, binding) {
+      element.focus()
+
+    },
+    //指令所在元素被重新解析时
+    update(element, binding) {
+      element.value = binding.value
+      element.focus()
+    }
+  }) */
+
+ /*  Vue.directive('big', function(element, binding){
+    element.innerText = binding.value * 10
+  })  */
+
+
+  const vm = new Vue({
+    el: '#root',
+    data: {
+      n: 1
+    },
+    // 定义局部指令
+    directives: {
+      // big函数何时被会调用？1.指令与元素成功绑定时（一上来）。2.指令所在的模板被重新解析时。
+      // 'big-number'(element,binding){
+      //   element.innerText = binding.value * 10
+      // },
+      big(element, binding) {
+        // console.log('big')
+        // console.dir(element)//element是真实dom
+        // console.dir(element instanceof HTMLElement) //element是真实dom
+
+        // console.log(element, binding)
+        console.log('big', this)
+
+        element.innerText = binding.value * 10
+      },
+
+      // 指令的函数式写法，无法实现元素渲染后的操作
+      /*   fbind(element,binding){
+          element.value = binding.value
+          element.focus()//vue解析时，指令与元素绑定，但是没有渲染到页面上，此时获取焦点，在渲染之后就无了
+        }, */
+
+      //指令的函数式写法相当于对象式写法中的bind+update，但是没有inserted
+
+      //指令的对象式写法
+      fbind:{
+        //指令与元素成功绑定时（一上来）
+        bind(element,binding){
+          console.log('fbind-bind',this) //注意此处的this是windows，不是Vue实例对象
+          element.value = binding.value
+        },
+        //指令所在元素被插入页面时
+        inserted(element,binding){
+          console.log('fbind-inserted',this) 
+          element.focus()
+
+        },
+         //指令所在元素被重新解析时
+        update(element,binding){
+          console.log('fbind-update',this) 
+          element.value = binding.value
+          element.focus()
+        }
+      }
+    }
+
+  })
+
+  // new Vue({
+  //   el: '#root2',
+  //   data: {
+  //     x: 1
+  //   }
+  // })
+
+</script>
+
+</html>
