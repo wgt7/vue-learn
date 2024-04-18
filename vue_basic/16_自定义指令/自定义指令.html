@@ -18,7 +18,9 @@
   <div id="root">
     <h2>当前的n值是：<span v-text="n"></span></h2>
     <h2>放大10倍后的n值是：<span v-big="n"></span></h2>
-    <button @click="n++">点我n+1</button>
+    <button @click="n++">点我n+1</button><br/>
+    <hr>
+    <input type="text" v-fbind:value="n">
   </div>
 </body>
 
@@ -36,9 +38,39 @@
         // console.log('big')
         // console.dir(element)//element是真实dom
         // console.dir(element instanceof HTMLElement) //element是真实dom
-        console.log(element, binding)
+
+        // console.log(element, binding)
 
         element.innerText = binding.value * 10
+      },
+
+      // 指令的函数式写法，无法实现元素渲染后的操作
+      // fbind(element,binding){
+      //   element.value = binding.value
+      //   element.focus()//vue解析时，指令与元素绑定，但是没有渲染到页面上，此时获取焦点，在渲染之后就无了
+      // },
+
+      //指令的函数式写法相当于对象式写法中的bind+update，但是没有inserted
+
+      //指令的对象式写法
+      fbind:{
+        //指令与元素成功绑定时（一上来）
+        bind(element,binding){
+          console.log('bind') 
+          element.value = binding.value
+        },
+        //指令所在元素被插入页面时
+        inserted(element,binding){
+          console.log('inserted') 
+          element.focus()
+
+        },
+         //指令所在元素被重新解析时
+        update(element,binding){
+          console.log('update') 
+          element.value = binding.value
+          element.focus()
+        }
       }
     }
     
