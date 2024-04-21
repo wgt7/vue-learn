@@ -14,8 +14,10 @@
   -->
   <!-- 准备好一个容器-->
   <div id="root" :x="n">
+    <h2 v-text="n"></h2>
     <h2>当前的n值是：{{n}}</h2>
     <button @click="add">点我n+1</button>
+    <button @click="bye">点我销毁vm</button>
   </div>
 </body>
 
@@ -35,7 +37,17 @@
     },
     methods: {
       add(){
+        console.log('add')
         this.n++
+      },
+      bye(){
+        console.log('bye')
+        this.$destroy()
+      }
+    },
+    watch:{
+      n(){
+        console.log('n变了')
       }
     },
 
@@ -90,6 +102,19 @@
       // console.log(this.n)
       //此时：数据是新的，页面也是新的，即：页面和数据保持同步
       // debugger
+    },
+    beforeDestroy() {
+      console.log('beforeDestroy')
+      console.log(this.n)
+      this.add()//add还会调用，但是页面不再更新了
+      /* 
+        此时：
+        vm中的所有：data、methods、指令等等，都处于可用状态，马上要执行销过程，
+        一般在此阶段：关闭定时器、取消订阅消息、解绑自定义事件等收尾操作
+      */
+    },
+    destroyed() {
+      console.log('destroyed')
     },
     
   })
