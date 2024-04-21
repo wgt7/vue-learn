@@ -56,6 +56,7 @@
       // console.log(this)//此时：无法 通过vm访问到data中的数据、methods中的方法。
       // debugger;//加断点
     },
+    // 创建指的是：数据检测、数据代理。 不是vm！！！
     created() {
       console.log('created')
       // console.log(this)//此时：可以 通过vm访问到data中的数据、methods中的方法。
@@ -113,6 +114,7 @@
         一般在此阶段：关闭定时器、取消订阅消息、解绑自定义事件等收尾操作
       */
     },
+    // 移除监视器、子组件和事件监听器
     destroyed() {
       console.log('destroyed')
     },
