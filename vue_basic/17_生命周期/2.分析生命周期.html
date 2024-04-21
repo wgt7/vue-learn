@@ -62,7 +62,7 @@
     },
     // 随后，将内存中的虚拟DOM转为真实DOM插入页面
     mounted() {
-      console.log('mounted')
+      console.log('mounted', this.$el instanceof HTMLElement)
       // console.log(this)
       /* 
         此时：
@@ -74,6 +74,24 @@
       // document.querySelector('h2').innerText = '哈哈'  
       // debugger
     },
+    beforeUpdate() {
+      console.log('beforeUpdate')
+      // console.log(this.n)
+      /* 
+      此时：
+        数据是新的，但页面时旧的，即：页面尚未和数据保持同步
+      */
+     // debugger
+    },
+    //随后：根据新数据，生成新的虚拟DOM，随后与旧的虚拟DOM进行比较，
+    //最终完成页面更新,即:完成了Model->View的更新 
+    updated() {
+      console.log('updated')
+      // console.log(this.n)
+      //此时：数据是新的，页面也是新的，即：页面和数据保持同步
+      // debugger
+    },
+    
   })
 
 </script>
