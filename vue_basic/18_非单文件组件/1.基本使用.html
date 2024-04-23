@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>基本使用</title>
+
+  <!-- 引入Vue -->
+  <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+
+<body>
+  <!--
+  -->
+  <!-- 准备好一个容器-->
+  <div id="root">
+   <!--  <h2>学校名称：{{schoolName}}</h2>
+    <h2>学校地址：{{address}}</h2>
+    <hr>
+    <h2>学生姓名：{{studentName}}</h2>
+    <h2>学生年龄：{{age}}</h2> -->
+
+    <hello></hello>
+    <hr>
+    <h1>{{msg}}</h1>
+    <hr>
+    <!-- 第三步：编写组件标签 -->
+    <school></school>
+    <hr>
+    <student></student>
+    <student></student>
+
+  </div>
+
+  <div id="root2">
+    <hr>
+    <hello></hello>
+    <student></student>
+  </div>
+
+</body>
+
+<script type="text/javascript">
+  Vue.config.productionTip = false //阻止 vue 在启动时生成生产提示。
+
+  //第一步：创建school组件
+  const school = Vue.extend({
+    // el: '#root',//组件定义时，一定不要配置el项，因为最终所有的组件都要被一个vm管理，由vm决定服务于哪个容器。
+    template:`
+      <div>
+        <h2>学校名称：{{schoolName}}</h2>
+        <h2>学校地址：{{address}}</h2>
+        <button @click="showName">点我提示学校名</button>
+      </div>
+    `,
+    data(){
+      return{
+        schoolName: '尚硅谷',
+        address: '北京昌平'
+      }
+    },
+    methods: {
+      showName(){
+        alert(this.schoolName)
+      }
+    },
+  })
+
+  //第一步：创建student组件
+  const student = Vue.extend({
+    template:`
+      <div>
+        <h2>学生姓名：{{studentName}}</h2>
+        <h2>学生年龄：{{age}}</h2>
+      </div>
+    `,
+    data(){
+      return{
+        studentName: '张三',
+        age: 18
+      }
+    }
+  })
+
+   //第一步：创建hello组件
+  const hello = Vue.extend({
+    template:`
+      <div>
+        <h2>你好啊{{name}}</h2>
+      </div>
+    `,
+    data(){
+      return{
+        name:'Tom'
+      }
+    }
+  })
+
+  // 第二步：注册全局组件
+  Vue.component('hello',hello)
+
+
+  //创建vm
+  new Vue({
+    el: '#root',
+    /* data: {
+      schoolName: '尚硅谷',
+      address: '北京昌平',
+      studentName: '张三',
+      age: 18
+    }, */
+    data:{
+      msg:'你好啊'
+    },
+    // 第二步：注册组件（局部注册）
+    components:{
+      school,
+      student
+    }
+  })
+
+  //对象式，不同的引用会相互影响
+  /* let data = {
+    a:1,
+    b:2
+  }
+  const x1 = data
+  const x2 = data */
+
+  //函数式，不同的引用不会相互影响
+  /* function data2(){
+    return {
+      a:1,
+      b:2
+    }
+  }
+  const y1 = data2()
+  const y2 = data2() */
+
+  new Vue({
+    el: '#root2',
+    components:{
+      student
+    }
+  })
+
+</script>
+
+</html>
